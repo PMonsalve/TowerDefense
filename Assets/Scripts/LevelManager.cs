@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -8,14 +8,21 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject[] tiles;
 
-    public float TileSize //Acessar o tamanho do tile de forma pública
-    {
-        get { return tiles[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
-    }
+    public static List<GameObject> roadTiles = new List<GameObject>();
+
+    private int maxX; // Limites do mapa
+    private int maxY;
+
+    public static GameObject spawn;
+    public static GameObject finish;
+
+    private GameObject newTile;
+
     // Start is called before the first frame update
     void Start()
     {
-        CreateMap();
+        createMap();
+        
     }
 
     // Update is called once per frame
@@ -24,20 +31,33 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    private void CreateMap() //Metodo de criação e posicionamento dos tiles no mapa
+    public float TileSize //Acessar o tamanho do tile de forma pï¿½blica
     {
+        get { return tiles[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
+    }
+
+    private void createMap() //Metodo de criacao e posicionamento dos tiles no mapa
+    {
+        
         string[] stageSeed = ReadStageSeed();
 
-        int maxX = stageSeed[0].ToCharArray().Length; // Limites do mapa
-        int maxY = stageSeed.Length;
+        maxX = stageSeed[0].ToCharArray().Length; //Limites do mapa de acordo com o tamanho da matriz do arquivo externo(XxY)
+        maxY = stageSeed.Length;
+
         Vector3 screenCorner = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height)); //Percorrer e preencher o mapa com tiles
         for (int j = 0; j < maxY; j++)
         {
             char[] newTiles = stageSeed[j].ToCharArray(); //Preencher a linha
             for(int i = 0; i < maxX; i++)
             {
-                GameObject newTile = Instantiate(tiles[int.Parse(newTiles[i].ToString())]); //Posicionamento dos tiles de acordo com o numero
+                newTile = Instantiate(tiles[int.Parse(newTiles[i].ToString())]); //Posicionamento dos tiles de acordo com o numero
                 newTile.transform.position = new Vector3(screenCorner.x + TileSize * i, screenCorner.y - TileSize * j, 0);
+                
+                if (newTiles[i].ToString() != "0" && newTiles[i].ToString() != "4")
+                {   //Atribuir os tiles do caminho para uma lista da estrada, excluindo 0 que Ã© o fundo e 4 que sÃ£o espaÃ§os para torres 
+                    roadTiles.Add(newTile);
+                    tiles[int.Parse(newTiles[i].ToString())].transform.position = newTile.transform.position;
+                }
             }
         }
     }
@@ -48,4 +68,8 @@ public class LevelManager : MonoBehaviour
         string seed = data.text.Replace(Environment.NewLine, string.Empty);
         return seed.Split('+');
     }
+
+  
+
+    
 }
