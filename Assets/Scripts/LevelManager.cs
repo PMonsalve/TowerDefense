@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     private GameObject[] tiles;
 
     public static List<GameObject> roadTiles = new List<GameObject>();
+    public static List<GameObject> towerSlots = new List<GameObject>();
 
     private int maxX; // Limites do mapa
     private int maxY;
@@ -56,8 +57,9 @@ public class LevelManager : MonoBehaviour
                 if (newTiles[i].ToString() != "0" && newTiles[i].ToString() != "4")
                 {   //Atribuir os tiles do caminho para uma lista da estrada, excluindo 0 que é o fundo e 4 que são espaços para torres 
                     roadTiles.Add(newTile);
-                    tiles[int.Parse(newTiles[i].ToString())].transform.position = newTile.transform.position;
-                }
+                    //tiles[int.Parse(newTiles[i].ToString())].transform.position = newTile.transform.position;
+                }else if(newTiles[i].ToString() == "4")
+                    towerSlots.Add(newTile); //Adicionar o tile de espaço para torre na lista
             }
         }
     }

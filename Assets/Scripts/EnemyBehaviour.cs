@@ -13,8 +13,11 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject nextTile;
 
+    
+
     private int currentTile;
     private float distance;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,7 @@ public class EnemyBehaviour : MonoBehaviour
         enemyMovement();
     }
 
-    private void enemyStart()
+    private void enemyStart() //Primeiro tile que o inimigo vai
     {
         nextTile = LevelManager.roadTiles[0];
     }
@@ -48,7 +51,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         if (nextTile != null && LevelManager.roadTiles[currentTile+1].tag !="Finish")
         {
-            distance = (transform.position - nextTile.transform.position).magnitude;
+            distance = (transform.position - nextTile.transform.position).magnitude; //Se chegar a distancia de 0.001f, é considerado no próximo tile
             if(distance < 0.001f)
             {
                 
@@ -64,6 +67,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         enemyHP -= damage;
         if (enemyHP <= 0)
-            Destroy(transform.gameObject);
+        {
+            Destroy(gameObject);
+        }
     }
 }
