@@ -143,12 +143,12 @@ PrefabInstance:
     - target: {fileID: 6358622266285815327, guid: 8346d101b69b59b4dab225f9b13e9bc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.01
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 6358622266285815327, guid: 8346d101b69b59b4dab225f9b13e9bc6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.85
+      value: -6.99
       objectReference: {fileID: 0}
     - target: {fileID: 6358622266285815327, guid: 8346d101b69b59b4dab225f9b13e9bc6,
         type: 3}
@@ -1821,12 +1821,12 @@ PrefabInstance:
     - target: {fileID: 7449181740247550334, guid: 997a52c84b412a3408a86c7561cf9a59,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.84
+      value: -2.57
       objectReference: {fileID: 0}
     - target: {fileID: 7449181740247550334, guid: 997a52c84b412a3408a86c7561cf9a59,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.87
+      value: -7.06
       objectReference: {fileID: 0}
     - target: {fileID: 7449181740247550334, guid: 997a52c84b412a3408a86c7561cf9a59,
         type: 3}
@@ -2035,6 +2035,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 2147483647
+  towerMask:
+    serializedVersion: 2
+    m_Bits: 0
   towerSelect: {fileID: 2413477118754616755, guid: 8346d101b69b59b4dab225f9b13e9bc6,
     type: 3}
 --- !u!4 &2065227416

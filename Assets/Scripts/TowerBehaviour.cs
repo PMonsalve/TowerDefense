@@ -49,33 +49,34 @@ public class TowerBehaviour : MonoBehaviour
         
         if (other.tag == "Enemy")
         {
-            changeTarget();
+            //changeTarget();
+            targetEnemy = null;
         }
     }
 
-    //public void OnTriggerStay2D(Collider2D other) //Metodo para trocar de alvo, mas acho que ele escolhe um alvo qualquer na area
-    //{
-    //    if (other.tag == "Enemy")
-    //    {
-    //        targetEnemy = other.gameObject;
-    //    }
-    //}
-    
+    public void OnTriggerStay2D(Collider2D other) //Metodo para trocar de alvo, mas acho que ele escolhe um alvo qualquer na area
+    {
+        if (other.tag == "Enemy")
+        {
+            targetEnemy = other.gameObject;
+        }
+    }
+
     private void changeTarget()
     {
         //testa se tem outro inimigo na area quando termina a colisão
         //OnTriggerStay parece escolher um alvo random na area, por mais que possa mudar de alvo
-        //Esse sempre pega o alvo mais proximo
-        float distance;
-        foreach(GameObject enemy in GameManager.enemyGroup)
-        {
-            distance = (transform.position - enemy.transform.position).magnitude;
-            if (distance <= range)
-                targetEnemy = enemy;
-            else
-                targetEnemy = null;
+        //Esse sempre mira no alvo até ele ser destruido
+        //float distance;
+        //foreach(GameObject enemy in GameManager.enemyGroup)
+        //{
+        //    distance = (transform.position - enemy.transform.position).magnitude;
+        //    if (distance <= range)
+        //        targetEnemy = enemy;
+        //    else
+        //        targetEnemy = null;
 
-        }
+        //}
 
     }
 

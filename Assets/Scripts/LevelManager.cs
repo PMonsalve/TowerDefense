@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
         maxX = stageSeed[0].ToCharArray().Length; //Limites do mapa de acordo com o tamanho da matriz do arquivo externo(XxY)
         maxY = stageSeed.Length;
 
-        Vector3 screenCorner = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height)); //Percorrer e preencher o mapa com tiles
+        Vector3 screenCorner = Camera.main.ScreenToWorldPoint(new Vector3(95, Screen.height-95)); //Percorrer e preencher o mapa com tiles
         for (int j = 0; j < maxY; j++)
         {
             char[] newTiles = stageSeed[j].ToCharArray(); //Preencher a linha
