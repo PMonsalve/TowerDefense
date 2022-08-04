@@ -13,7 +13,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject nextTile;
 
-    
+    public GameObject manager;
 
     private int currentTile;
     private float distance;
@@ -23,6 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         enemyStart();
+        manager = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
@@ -47,6 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (LevelManager.roadTiles[currentTile+1].tag == "Finish")
         {
             Debug.Log("Game Over!");
+            gameOver();
             Destroy(transform.gameObject);
         }
         if (nextTile != null && LevelManager.roadTiles[currentTile+1].tag !="Finish")
@@ -68,7 +70,13 @@ public class EnemyBehaviour : MonoBehaviour
         enemyHP -= damage;
         if (enemyHP <= 0)
         {
+            manager.GetComponent<GameManager>().morePoints(points);
+            manager.GetComponent<GameManager>().makeMoney(coins);
             Destroy(gameObject);
         }
+    }
+    private void gameOver()
+    {
+        manager.GetComponent<GameManager>().setGameOver();
     }
 }

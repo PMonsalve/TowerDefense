@@ -8,9 +8,10 @@ public class PlacementManager : MonoBehaviour
     private Camera cam;
 
     private GameObject hoverTile;
-    [SerializeField]
+    [SerializeField]    //Layermasks para o raycast
     private LayerMask mask,towerMask;
 
+    public GameObject manager; //GameManager
 
     [SerializeField]
     private GameObject towerSelect;
@@ -21,13 +22,13 @@ public class PlacementManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Build();
+        //startBuild(towerSelect);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (building == true)
+        if (building == true)//Se estiver no modo de construção de torre, a amostra da torre ficará seguindo o mouse pelos tiles de construção
         {
             if (dummyPlacement != null)
             {
@@ -37,7 +38,10 @@ public class PlacementManager : MonoBehaviour
 
             }
             if (Input.GetButtonDown("Fire1"))
+            { //Botão do mouse para confirmara a construção e posicionar a torre
                 PlaceTower();
+            }
+
         }
     }
 
@@ -46,7 +50,7 @@ public class PlacementManager : MonoBehaviour
         return cam.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    public void GetHoverTile()
+    private void GetHoverTile()//Tile que está de baixo do mouse, considera apenas os tiles do grid para as torres
     {
         Vector2 mousePosition = GetMousePosition();
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, new Vector2(0, 0), 0.1f, mask, -100, 100);
@@ -59,24 +63,24 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void Build()
+    public void startBuild(GameObject towerButton)//Inicio da construção de torre, demonstrando a torre a ser colocara no tile
     {
         building = true;
-        dummyPlacement = Instantiate(towerSelect);
+        dummyPlacement = Instantiate(towerButton);
         if (dummyPlacement.GetComponent<TowerBehaviour>() != null)
             Destroy(dummyPlacement.GetComponent<TowerBehaviour>());
-        
 
+        towerSelect = towerButton; //Altera a torre selecionada para a torre que começou a construção 
     }
 
-    public void endBuild()
+    private void endBuild()//Finaliza o processo de contrução
     {
         building = false;
         if (dummyPlacement != null)
             Destroy(dummyPlacement);
     }
 
-    public void PlaceTower()
+    private void PlaceTower()//Cria a instancia da torre no local e faz a compra
     {
         if (hoverTile != null)
             if (HaveTower() == false)
@@ -84,13 +88,14 @@ public class PlacementManager : MonoBehaviour
                 GameObject newTowerObject = Instantiate(towerSelect);
                 newTowerObject.layer = LayerMask.NameToLayer("Tower");
                 newTowerObject.transform.position = hoverTile.transform.position;
+                manager.GetComponent<GameManager>().spendMoney(towerSelect.GetComponent<TowerBehaviour>().price);
                 endBuild();
             }
 
         
     }
 
-    public bool HaveTower()
+    private bool HaveTower()//Metodo que mostra a torre nos slots antes de ser posicionada
     {
         occupiedSlot = false;
         Vector2 mousePosition = GetMousePosition();

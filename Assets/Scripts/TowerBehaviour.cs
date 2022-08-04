@@ -5,7 +5,9 @@ using UnityEngine;
 public class TowerBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private float damage, shootCooldown, range;
+    private float damage, shootCooldown;//, range;
+
+    public int price;
 
     private float nextShot;
 
@@ -18,7 +20,7 @@ public class TowerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        range = 1.7f;
+        //range = 1.7f;
         nextShot = Time.time;
     }
 
