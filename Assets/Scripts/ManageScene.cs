@@ -26,6 +26,7 @@ public class ManageScene : MonoBehaviour
             resultMoney = manager.GetComponent<GameManager>().GetMoney();
             resultScore = manager.GetComponent<GameManager>().GetScore();
         }
+
         if (!manager.GetComponent<GameManager>().GetAlive())
         {
             counting = false;
